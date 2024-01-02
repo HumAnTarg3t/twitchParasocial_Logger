@@ -21,7 +21,6 @@ streamers.forEach((streamer) => {
     let timestamp = tags["tmi-sent-ts"];
 
     let readableDate = convertTimestamp(parseInt(timestamp));
-    // console.log(readableDate);
 
     try {
       if (tags.mod == true || tags.badges.vip == 1) {

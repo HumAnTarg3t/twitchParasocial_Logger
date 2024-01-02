@@ -2,9 +2,9 @@
   "name": "twitchParasocial_Logger",
   "version": "1.0.0",
   "description": "gathers logs from twitch streamers",
-  "main": "app.js",
+  "main": "main.js",
   "scripts": {
-    "dev": "nodemon"
+    "start": "electron ."
   },
   "keywords": [
     "twitch",
@@ -14,9 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "dotenv": "^10.0.0",
+    "electron": "^28.1.0",
     "tmi.js": "^1.8.5"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.7"
   }
 }
