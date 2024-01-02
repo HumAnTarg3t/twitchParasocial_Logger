@@ -1,0 +1,29 @@
+/* style.css */
+/* Style for tabs */
+
+body {
+  background-color: slategrey;
+}
+
+.tab {
+  display: none;
+}
+
+/* Style to position tabs at the top */
+.tabLinks {
+  position: sticky;
+  top: 0;
+  background-color: slategrey; /* Optionally add a background color */
+  z-index: 100; /* Ensure the tabs stay on top of other content */
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.tabLinks button {
+  padding: 8px 16px;
+  cursor: pointer;
+  border: none;
+  background-color: slategrey;
+}
