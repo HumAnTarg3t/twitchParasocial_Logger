@@ -1,22 +1,19 @@
 {
-  "name": "KEKWChatterBot",
+  "name": "twitchParasocial_Logger",
   "version": "1.0.0",
-  "description": "Chatter\u001f bot",
+  "description": "gathers logs from twitch streamers",
   "main": "app.js",
   "scripts": {
     "dev": "nodemon"
   },
   "keywords": [
     "twitch",
-    "chat",
-    "bot",
-    "story"
+    "chat"
   ],
   "author": "HumAnTarg3t",
   "license": "MIT",
   "dependencies": {
     "dotenv": "^10.0.0",
-    "readline-sync": "^1.4.10",
     "tmi.js": "^1.8.5"
   },
   "devDependencies": {
