@@ -4,6 +4,16 @@
     <title>My Electron App</title>
   </head>
   <body>
-    <h1>Hello Electron!</h1>
+    <div id="consoleOutput"></div>
+
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        const consoleOutput = document.getElementById("consoleOutput");
+
+        window.api.receive("log-message", (message) => {
+          consoleOutput.innerHTML += `<p>${message}</p>`;
+        });
+      });
+    </script>
   </body>
 </html>
