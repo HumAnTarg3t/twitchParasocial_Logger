@@ -1,0 +1,25 @@
+{
+  "name": "KEKWChatterBot",
+  "version": "1.0.0",
+  "description": "Chatter\u001f bot",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon"
+  },
+  "keywords": [
+    "twitch",
+    "chat",
+    "bot",
+    "story"
+  ],
+  "author": "HumAnTarg3t",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "readline-sync": "^1.4.10",
+    "tmi.js": "^1.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
