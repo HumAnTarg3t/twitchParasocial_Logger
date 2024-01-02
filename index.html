@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
   <head>
     <title>My Electron App</title>
@@ -12,6 +12,77 @@
 
         window.api.receive("log-message", (message) => {
           consoleOutput.innerHTML += `<p>${message}</p>`;
+        });
+      });
+    </script>
+  </body>
+</html> -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Electron App</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="tabLinks"></div>
+    <div class="tabs"></div>
+
+    <!-- <div id="consoleOutput"></div> -->
+
+    <script>
+      window.addEventListener("DOMContentLoaded", async () => {
+        const tabLinksContainer = document.querySelector(".tabLinks");
+        const tabsContainer = document.querySelector(".tabs");
+
+        // Fetching data from local JSON file
+        try {
+          const streamerListFromConfig = await fetch("config.json");
+          const streamerList = await streamerListFromConfig.json();
+
+          streamerList.data.forEach((item, index) => {
+            // Create tab link
+            const tabLink = document.createElement("button");
+            tabLink.textContent = item;
+            tabLink.addEventListener("click", () => showTab(index));
+            tabLinksContainer.appendChild(tabLink);
+
+            // Create tab content
+            const tabContent = document.createElement("div");
+            tabContent.className = "tab";
+            tabContent.setAttribute("id", item);
+            tabContent.textContent = `Content for ${item}`;
+            tabsContainer.appendChild(tabContent);
+          });
+
+          showTab(0); // Show the first tab initially
+        } catch (error) {
+          console.error("Error fetching or parsing data:", error);
+        }
+
+        // Function to show tab based on index
+        function showTab(index) {
+          const tabs = document.querySelectorAll(".tab");
+          const tabLinks = document.querySelectorAll(".tabLinks button");
+
+          tabs.forEach((tab) => (tab.style.display = "none"));
+          tabLinks.forEach((link) => link.classList.remove("active"));
+
+          tabs[index].style.display = "block";
+          tabLinks[index].classList.add("active");
+        }
+
+        window.api.receive("log-message", (ClientPayload) => {
+          const channelFromTwitch = ClientPayload.messageInfo.channel;
+          const channelFromTwitchSliced = channelFromTwitch.slice(1);
+          // console.log(channelFromTwitchSliced);
+
+          let consoleOutput = document.getElementById(channelFromTwitchSliced);
+          // let consoleOutputSliced = consoleOutput.slice(1);
+          // console.log(consoleOutput);
+
+          consoleOutput.innerHTML += `<p>${ClientPayload.messageInfo.date_tmi_sent_ts} ${ClientPayload.messageInfo.username}: ${ClientPayload.messageInfo.message}</p>`;
+          console.log(ClientPayload);
         });
       });
     </script>
