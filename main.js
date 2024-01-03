@@ -51,10 +51,21 @@ streamerListFromConfig.forEach((streamer) => {
   client.on("message", (channel, tags, message, self) => {
     let timestamp = tags["tmi-sent-ts"];
     let readableDate = convertTimestamp(parseInt(timestamp));
-
+    const skipableUsernames = [
+      "nightbot",
+      "streamelements",
+      "fossabot",
+      "schnozebot",
+      "botrixoficial",
+      "thepositivebot",
+    ];
     try {
-      // tags.mod == true || tags.badges.vip == 1 || streamerListFromConfig.includes(tags.username)
-      if (true) {
+      if (
+        (streamerListFromConfig.includes(tags.username) && !skipableUsernames.includes(tags.username)) ||
+        (tags.mod == true && !skipableUsernames.includes(tags.username)) ||
+        (tags.badges.vip == 1 && !skipableUsernames.includes(tags.username))
+      ) {
+        // console.log(streamerListFromConfig.includes(tags.username) && !skipableUsernames.includes(tags.username));
         const logMessage = {
           channel: channel,
           date_tmi_sent_ts: readableDate,
@@ -67,6 +78,9 @@ streamerListFromConfig.forEach((streamer) => {
         };
         // Send the log message to the renderer process
         mainWindow.webContents.send("log-message", ClientPayload);
+      } else {
+        // console.log("Not logging", !skipableUsernames.includes(tags.username));
+        // console.log(!skipableUsernames.includes(tags.username));
       }
     } catch (error) {
       return null;
