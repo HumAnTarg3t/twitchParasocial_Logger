@@ -3,15 +3,10 @@ const { readFileSync } = require("fs");
 const path = require("path");
 const url = require("url");
 const tmi = require("tmi.js");
-// const { log } = require("console");
 
 const dataFromConfig = readFileSync("./config.json");
 const streamerListFromConfig = JSON.parse(dataFromConfig).data;
-// const dataFromConfig = data.data;
 
-// console.log(streamerListFromConfig);
-
-// const streamers = ["nmplol", "nmplol2", "noraexplorer"];
 const convertTimestamp = (timestamp) => {
   const date = new Date(timestamp);
   return date.toLocaleString(); // Adjusts to local time
@@ -54,15 +49,11 @@ streamerListFromConfig.forEach((streamer) => {
   client.connect();
 
   client.on("message", (channel, tags, message, self) => {
-    // mainWindow.webContents.send("streamer-list", streamerListFromConfig);
-    // console.log(tags);
     let timestamp = tags["tmi-sent-ts"];
     let readableDate = convertTimestamp(parseInt(timestamp));
 
     try {
       if (tags.mod == true || tags.badges.vip == 1 || streamerListFromConfig.includes(tags.username)) {
-        // console.log(streamerListFromConfig.includes(tags.username));
-        // const logMessage = `${channel} ${readableDate} ${tags["display-name"]}: ${message}`;
         const logMessage = {
           channel: channel,
           date_tmi_sent_ts: readableDate,
