@@ -9,8 +9,7 @@ First time
 5. npm install
 6. npx electron-forge import
 7. npm start (starts developer instance)
-8. npm run make (creates EXE)
 
 After changes
 
-Step 7 or 8
+Step 7
