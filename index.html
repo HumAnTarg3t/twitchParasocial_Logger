@@ -98,13 +98,26 @@
         // Event listener for scroll event
         window.addEventListener("wheel", handleScroll);
 
+        document.addEventListener("keydown", (event) => {
+          if (event.ctrlKey && event.key === "f") {
+            //Noe logikk for å søke gjennom DOM
+            const searchText = "3.1.2024";
+            const content = document.getElementById("cyr");
+            const contentText = content.innerHTML;
+            content.innerHTML = contentText.replace(/<span class='highlight'>|<\/span>/g, "");
+            const regex = new RegExp(searchText, "gi");
+            const highlightedText = contentText.replace(regex, `<span class='highlight'>$&</span>`);
+            content.innerHTML = highlightedText;
+          }
+        });
+
         window.api.receive("log-message", (ClientPayload) => {
           const channelFromTwitch = ClientPayload.messageInfo.channel;
           const channelFromTwitchSliced = channelFromTwitch.slice(1);
 
           let consoleOutput = document.getElementById(channelFromTwitchSliced);
 
-          consoleOutput.innerHTML += `<p>${ClientPayload.messageInfo.date_tmi_sent_ts} ${ClientPayload.messageInfo.username}: ${ClientPayload.messageInfo.message}</p>`;
+          consoleOutput.innerHTML += `<p id="${channelFromTwitchSliced}">${ClientPayload.messageInfo.date_tmi_sent_ts} ${ClientPayload.messageInfo.username}: ${ClientPayload.messageInfo.message}</p>`;
 
           console.log(ClientPayload);
           scrollToBottom(autoScrollflag);
