@@ -48,19 +48,66 @@
 
           tabs[index].style.display = "block";
           tabLinks[index].classList.add("active");
+          const documentHeight = Math.max(
+            document.body.scrollHeight,
+            document.body.offsetHeight,
+            document.documentElement.clientHeight,
+            document.documentElement.scrollHeight,
+            document.documentElement.offsetHeight
+          );
+          window.scrollTo({
+            top: documentHeight,
+          });
         }
+
+        let autoScrollflag;
+        autoScrollflag = true;
+
+        function scrollToBottom(autoScrollflag) {
+          if (autoScrollflag) {
+            const documentHeight = Math.max(
+              document.body.scrollHeight,
+              document.body.offsetHeight,
+              document.documentElement.clientHeight,
+              document.documentElement.scrollHeight,
+              document.documentElement.offsetHeight
+            );
+            window.scrollTo({
+              top: documentHeight,
+              behavior: "smooth", // Use smooth scrolling behavior
+            });
+          } else {
+            console.log("no scroll");
+          }
+        }
+
+        function handleScroll(event) {
+          const contentHeight = document.body.scrollHeight;
+          const yOffset = window.pageYOffset;
+          const windowHeight = window.innerHeight;
+
+          if (event.deltaY < 0) {
+            console.log("Scroll up");
+            // Add your actions for scrolling up here
+            autoScrollflag = false;
+          } else if (yOffset + windowHeight >= contentHeight - 100) {
+            autoScrollflag = true;
+          }
+        }
+
+        // Event listener for scroll event
+        window.addEventListener("wheel", handleScroll);
 
         window.api.receive("log-message", (ClientPayload) => {
           const channelFromTwitch = ClientPayload.messageInfo.channel;
           const channelFromTwitchSliced = channelFromTwitch.slice(1);
-          // console.log(channelFromTwitchSliced);
 
           let consoleOutput = document.getElementById(channelFromTwitchSliced);
-          // let consoleOutputSliced = consoleOutput.slice(1);
-          // console.log(consoleOutput);
 
           consoleOutput.innerHTML += `<p>${ClientPayload.messageInfo.date_tmi_sent_ts} ${ClientPayload.messageInfo.username}: ${ClientPayload.messageInfo.message}</p>`;
+
           console.log(ClientPayload);
+          scrollToBottom(autoScrollflag);
         });
       });
     </script>

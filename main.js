@@ -53,7 +53,8 @@ streamerListFromConfig.forEach((streamer) => {
     let readableDate = convertTimestamp(parseInt(timestamp));
 
     try {
-      if (tags.mod == true || tags.badges.vip == 1 || streamerListFromConfig.includes(tags.username)) {
+      // tags.mod == true || tags.badges.vip == 1 || streamerListFromConfig.includes(tags.username)
+      if (true) {
         const logMessage = {
           channel: channel,
           date_tmi_sent_ts: readableDate,
