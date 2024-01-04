@@ -14,10 +14,10 @@
         const tabsContainer = document.querySelector(".tabs");
 
         // Fetching data from local JSON file
+        const streamerListFromConfig = await fetch("config.json");
+        const streamerList = await streamerListFromConfig.json();
+        const streamerListArray = streamerList.data;
         try {
-          const streamerListFromConfig = await fetch("config.json");
-          const streamerList = await streamerListFromConfig.json();
-
           streamerList.data.forEach((item, index) => {
             // Create tab link
             const tabLink = document.createElement("button");
@@ -29,7 +29,7 @@
             const tabContent = document.createElement("div");
             tabContent.className = "tab";
             tabContent.setAttribute("id", item);
-            tabContent.textContent = `Content for ${item}`;
+            // tabContent.textContent = `Content for ${item}`;
             tabsContainer.appendChild(tabContent);
           });
 
@@ -101,24 +101,34 @@
         document.addEventListener("keydown", (event) => {
           if (event.ctrlKey && event.key === "f") {
             //Noe logikk for å søke gjennom DOM
-            // const searchText = "3.1.2024";
-            // const content = document.getElementById("cyr");
-            // const contentText = content.innerHTML;
-            // content.innerHTML = contentText.replace(/<span class='highlight'>|<\/span>/g, "");
-            // const regex = new RegExp(searchText, "gi");
-            // const highlightedText = contentText.replace(regex, `<span class='highlight'>$&</span>`);
-            // content.innerHTML = highlightedText;
           }
         });
 
         window.api.receive("log-message", (ClientPayload) => {
           const channelFromTwitch = ClientPayload.messageInfo.channel;
           const channelFromTwitchSliced = channelFromTwitch.slice(1);
+          const consoleOutput = document.getElementById(channelFromTwitchSliced);
 
-          let consoleOutput = document.getElementById(channelFromTwitchSliced);
-
-          consoleOutput.innerHTML += `<p id="${channelFromTwitchSliced}">${ClientPayload.messageInfo.date_tmi_sent_ts} ${ClientPayload.messageInfo.username}: ${ClientPayload.messageInfo.message}</p>`;
-
+          if (streamerListArray.includes(ClientPayload.messageInfo.username)) {
+            //make streamer name red
+            // consoleOutput.innerHTML += `<p id="${channelFromTwitchSliced}">${ClientPayload.messageInfo.date_tmi_sent_ts} <p class="streamerName" ${ClientPayload.messageInfo.username}/p>: ${ClientPayload.messageInfo.message}</p>`;
+            consoleOutput.innerHTML += `
+    <p class="${channelFromTwitchSliced}"
+    <p class="dateCSS" style="display: inline-block; margin: 0">${ClientPayload.messageInfo.date_tmi_sent_ts}</p>
+    <p class="streamerIdCSS" style="display: inline-block; margin: 0">${ClientPayload.messageInfo.username}: </p>
+    <p class="msgCSS" style="display: inline-block; margin: 0">${ClientPayload.messageInfo.message}</p>
+  </p>
+    `;
+          } else {
+            // consoleOutput.innerHTML += `<p id="${channelFromTwitchSliced}">${ClientPayload.messageInfo.date_tmi_sent_ts} ${ClientPayload.messageInfo.username}: ${ClientPayload.messageInfo.message}</p>`;
+            consoleOutput.innerHTML += `
+    <p class="${channelFromTwitchSliced}"
+    <p class="dateCSS" style="display: inline-block; margin: 0">${ClientPayload.messageInfo.date_tmi_sent_ts}</p>
+    <p class="normalFrogIdCSS" style="display: inline-block; margin: 0">${ClientPayload.messageInfo.username}: </p>
+    <p class="msgCSS" style="display: inline-block; margin: 0">${ClientPayload.messageInfo.message}</p>
+  </p>
+    `;
+          }
           // console.log(ClientPayload);
           scrollToBottom(autoScrollflag);
         });
