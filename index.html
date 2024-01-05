@@ -148,7 +148,7 @@
                 const regex = new RegExp(`(?<![\\w!@#$%^&*()-+=?.,])[${userInput}]+(?![\\w!@#$%^&*()-+=?.,])`, "gi");
                 const isMatch = userInput !== "" && regex.test(textContent);
 
-                element.style.backgroundColor = isMatch ? "yellow" : "";
+                element.style.backgroundColor = isMatch ? "brown" : "";
 
                 if (isMatch) {
                   lastFoundElement = element;
