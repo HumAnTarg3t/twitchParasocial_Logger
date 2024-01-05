@@ -38,6 +38,9 @@
           console.error("Error fetching or parsing data:", error);
         }
 
+        // const test = document.getElementsByClassName("tabLinks").childNodes;
+        // console.log(test);
+
         // Function to show tab based on index
         function showTab(index) {
           const tabs = document.querySelectorAll(".tab");
@@ -55,6 +58,19 @@
             document.documentElement.scrollHeight,
             document.documentElement.offsetHeight
           );
+
+          // Get the button with the class "active" inside the div with the class "tabLinks"
+          const activeButton = document.querySelector(".tabLinks .active");
+
+          // Check if an active button was found
+          if (activeButton) {
+            // Get the inner text of the active button
+            const buttonText = activeButton.innerText;
+            document.title = `${buttonText}s chat`;
+          } else {
+            console.log('No button with class "active" found.');
+          }
+
           window.scrollTo({
             top: documentHeight,
           });
