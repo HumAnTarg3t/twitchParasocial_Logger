@@ -5,7 +5,10 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="tabLinks"></div>
+    <div class="headerClass" id="headerID">
+      <div class="tabLinks"></div>
+      <input class="searchBar" type="text" id="searchInput" placeholder="Search..." />
+    </div>
     <div class="tabs"></div>
 
     <script>
@@ -60,12 +63,12 @@
           );
 
           // Get the button with the class "active" inside the div with the class "tabLinks"
-          const activeButton = document.querySelector(".tabLinks .active");
+          const activeTab = document.querySelector(".tabLinks .active");
 
           // Check if an active button was found
-          if (activeButton) {
+          if (activeTab) {
             // Get the inner text of the active button
-            const buttonText = activeButton.innerText;
+            const buttonText = activeTab.innerText;
             document.title = `${buttonText}s chat`;
           } else {
             console.log('No button with class "active" found.');
@@ -115,8 +118,58 @@
         window.addEventListener("wheel", handleScroll);
 
         document.addEventListener("keydown", (event) => {
+          const activeTab = document.querySelector(".tabLinks .active").innerHTML;
+          const searchBarVisibility = getComputedStyle(document.querySelector(".searchBar")).visibility;
+          const searchBar = document.querySelector(".searchBar");
+          // console.log(searchBarVisibility);
           if (event.ctrlKey && event.key === "f") {
-            //Noe logikk for å søke gjennom DOM
+            if (searchBarVisibility == "hidden") {
+              searchBar.style.visibility = "visible";
+              const searchBarVisibility = getComputedStyle(searchBar).visibility;
+            } else {
+              searchBar.style.visibility = "hidden";
+              const searchBarVisibility = getComputedStyle(searchBar).visibility;
+              document.getElementById("searchInput").value = "";
+            }
+            // //Noe logikk for å søke gjennom DOM
+            const divElement = document.querySelector(`#${activeTab}.tab`);
+            const messagesInParagraphs = divElement.querySelectorAll("p").innerHTML;
+
+            function searchInDivElement() {
+              const activeTab = document.querySelector(".tabLinks .active").innerHTML;
+              const divElement = document.querySelector(`#${activeTab}.tab`);
+              const userInput = document.getElementById("searchInput").value.trim().toLowerCase();
+
+              const elementsToSearch = divElement.querySelectorAll("*");
+              let lastFoundElement = null;
+
+              elementsToSearch.forEach((element) => {
+                const textContent = element.textContent.toLowerCase();
+                const regex = new RegExp(`(?<![\\w!@#$%^&*()-+=?.,])[${userInput}]+(?![\\w!@#$%^&*()-+=?.,])`, "gi");
+                const isMatch = userInput !== "" && regex.test(textContent);
+
+                element.style.backgroundColor = isMatch ? "yellow" : "";
+
+                if (isMatch) {
+                  lastFoundElement = element;
+                }
+              });
+
+              if (lastFoundElement) {
+                lastFoundElement.scrollIntoView({ behavior: "smooth", block: "center" });
+              }
+            }
+
+            document.getElementById("searchInput").addEventListener("keydown", function (event) {
+              if (event.key === "Enter") {
+                const userInput = document.getElementById("searchInput").value.trim().toLowerCase();
+                if (userInput === "") {
+                  searchInDivElement(); // Run to clear highlighting if previously something was highlighted
+                } else {
+                  searchInDivElement(); // Run search with user input
+                }
+              }
+            });
           }
         });
 
@@ -129,21 +182,21 @@
             //make streamer name red
             // consoleOutput.innerHTML += `<p id="${channelFromTwitchSliced}">${ClientPayload.messageInfo.date_tmi_sent_ts} <p class="streamerName" ${ClientPayload.messageInfo.username}/p>: ${ClientPayload.messageInfo.message}</p>`;
             consoleOutput.innerHTML += `
-    <p class="${channelFromTwitchSliced}"
-    <p class="dateCSS" style="display: inline-block; margin: 0">${ClientPayload.messageInfo.date_tmi_sent_ts}</p>
-    <p class="streamerIdCSS" style="display: inline-block; margin: 0">${ClientPayload.messageInfo.username}: </p>
-    <p class="msgCSS" style="display: inline-block; margin: 0">${ClientPayload.messageInfo.message}</p>
-  </p>
-    `;
+        <p class="${channelFromTwitchSliced}"
+        <p class="dateCSS" style="display: inline-block; margin: 0">${ClientPayload.messageInfo.date_tmi_sent_ts}</p>
+        <p class="streamerIdCSS" style="display: inline-block; margin: 0">${ClientPayload.messageInfo.username}: </p>
+        <p class="msgCSS" style="display: inline-block; margin: 0">${ClientPayload.messageInfo.message}</p>
+      </p>
+        `;
           } else {
             // consoleOutput.innerHTML += `<p id="${channelFromTwitchSliced}">${ClientPayload.messageInfo.date_tmi_sent_ts} ${ClientPayload.messageInfo.username}: ${ClientPayload.messageInfo.message}</p>`;
             consoleOutput.innerHTML += `
-    <p class="${channelFromTwitchSliced}"
-    <p class="dateCSS" style="display: inline-block; margin: 0">${ClientPayload.messageInfo.date_tmi_sent_ts}</p>
-    <p class="normalFrogIdCSS" style="display: inline-block; margin: 0">${ClientPayload.messageInfo.username}: </p>
-    <p class="msgCSS" style="display: inline-block; margin: 0">${ClientPayload.messageInfo.message}</p>
-  </p>
-    `;
+        <p class="${channelFromTwitchSliced}"
+        <p class="dateCSS" style="display: inline-block; margin: 0">${ClientPayload.messageInfo.date_tmi_sent_ts}</p>
+        <p class="normalFrogIdCSS" style="display: inline-block; margin: 0">${ClientPayload.messageInfo.username}: </p>
+        <p class="msgCSS" style="display: inline-block; margin: 0">${ClientPayload.messageInfo.message}</p>
+      </p>
+        `;
           }
           // console.log(ClientPayload);
           scrollToBottom(autoScrollflag);

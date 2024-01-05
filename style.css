@@ -12,15 +12,34 @@ body {
 }
 
 /* Style to position tabs at the top */
-.tabLinks {
+/* New CSS rules to adjust layout and spacing */
+.headerClass {
   position: sticky;
   top: 0;
-  background-color: rgb(148, 67, 167) 112, 144; /* Optionally add a background color */
-  z-index: 100; /* Ensure the tabs stay on top of other content */
+  /* background-color: rgb(148, 67, 167); */
+  z-index: 100;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between; /* Distribute items horizontally */
   align-items: center;
   margin-bottom: 10px;
+  padding: 5px 10px; /* Add padding for better spacing */
+}
+
+.tabLinks {
+  display: flex;
+  gap: 5px; /* Creates space between tab links */
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.searchBar {
+  visibility: hidden;
+}
+
+/* Adjust the position of the search bar */
+.searchBar.visible {
+  visibility: visible;
+  margin-left: auto; /* Pushes the search bar to the right */
 }
 
 .tabLinks button {
@@ -44,4 +63,8 @@ body {
 .msgCSS {
 }
 .normalFrogIdCSS {
+}
+.highlight {
+  background-color: yellow; /* Change this to your preferred highlight color */
+  font-weight: bold; /* You can adjust other styles as needed */
 }
