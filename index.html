@@ -11,7 +11,13 @@
     </div>
     <div class="tabs"></div>
 
-    <script>
+    <!-- <script type="module"></script> -->
+    <script type="module">
+      // import { scrollToBottom } from "./utils/scrollToBottom.js";
+      // import { handleScroll } from "./utils/handleScroll.js";
+      import { deleteMessages } from "./utils/deleteMessages.js";
+      import { showTab } from "./utils/showTab.js";
+      import { searchInDivElement } from "./utils/searchInDivElement.js";
       window.addEventListener("DOMContentLoaded", async () => {
         const tabLinksContainer = document.querySelector(".tabLinks");
         const tabsContainer = document.querySelector(".tabs");
@@ -41,39 +47,39 @@
         }
 
         // Function to show tab based on index
-        function showTab(index) {
-          const tabs = document.querySelectorAll(".tab");
-          const tabLinks = document.querySelectorAll(".tabLinks button");
+        // function showTab(index) {
+        //   const tabs = document.querySelectorAll(".tab");
+        //   const tabLinks = document.querySelectorAll(".tabLinks button");
 
-          tabs.forEach((tab) => (tab.style.display = "none"));
-          tabLinks.forEach((link) => link.classList.remove("active"));
-          tabs[index].style.display = "block";
-          tabLinks[index].classList.add("active");
+        //   tabs.forEach((tab) => (tab.style.display = "none"));
+        //   tabLinks.forEach((link) => link.classList.remove("active"));
+        //   tabs[index].style.display = "block";
+        //   tabLinks[index].classList.add("active");
 
-          const documentHeight = Math.max(
-            document.body.scrollHeight,
-            document.body.offsetHeight,
-            document.documentElement.clientHeight,
-            document.documentElement.scrollHeight,
-            document.documentElement.offsetHeight
-          );
+        //   const documentHeight = Math.max(
+        //     document.body.scrollHeight,
+        //     document.body.offsetHeight,
+        //     document.documentElement.clientHeight,
+        //     document.documentElement.scrollHeight,
+        //     document.documentElement.offsetHeight
+        //   );
 
-          // Get the button with the class "active" inside the div with the class "tabLinks"
-          const activeTab = document.querySelector(".tabLinks .active");
+        //   // Get the button with the class "active" inside the div with the class "tabLinks"
+        //   const activeTab = document.querySelector(".tabLinks .active");
 
-          // Check if an active button was found
-          if (activeTab) {
-            // Get the inner text of the active button
-            const buttonText = activeTab.innerText;
-            document.title = `${buttonText}s chat`;
-          } else {
-            // console.log('No button with class "active" found.');
-          }
+        //   // Check if an active button was found
+        //   if (activeTab) {
+        //     // Get the inner text of the active button
+        //     const buttonText = activeTab.innerText;
+        //     document.title = `${buttonText}s chat`;
+        //   } else {
+        //     // console.log('No button with class "active" found.');
+        //   }
 
-          window.scrollTo({
-            top: documentHeight,
-          });
-        }
+        //   window.scrollTo({
+        //     top: documentHeight,
+        //   });
+        // }
 
         let autoScrollflag;
         autoScrollflag = true;
@@ -131,30 +137,30 @@
             const divElement = document.querySelector(`#${activeTab}.tab`);
             const messagesInParagraphs = divElement.querySelectorAll("p").innerHTML;
 
-            function searchInDivElement() {
-              const activeTab = document.querySelector(".tabLinks .active").innerHTML;
-              const divElement = document.querySelector(`#${activeTab}.tab`);
-              const userInput = document.getElementById("searchInput").value.trim().toLowerCase();
+            // function searchInDivElement() {
+            //   const activeTab = document.querySelector(".tabLinks .active").innerHTML;
+            //   const divElement = document.querySelector(`#${activeTab}.tab`);
+            //   const userInput = document.getElementById("searchInput").value.trim().toLowerCase();
 
-              const elementsToSearch = divElement.querySelectorAll("*");
-              let lastFoundElement = null;
+            //   const elementsToSearch = divElement.querySelectorAll("*");
+            //   let lastFoundElement = null;
 
-              elementsToSearch.forEach((element) => {
-                const textContent = element.textContent.toLowerCase();
-                const regex = new RegExp(`(?<![\\w!@#$%^&*()-+=?.,])[${userInput}]+(?![\\w!@#$%^&*()-+=?.,])`, "gi");
-                const isMatch = userInput !== "" && regex.test(textContent);
+            //   elementsToSearch.forEach((element) => {
+            //     const textContent = element.textContent.toLowerCase();
+            //     const regex = new RegExp(`(?<![\\w!@#$%^&*()-+=?.,])[${userInput}]+(?![\\w!@#$%^&*()-+=?.,])`, "gi");
+            //     const isMatch = userInput !== "" && regex.test(textContent);
 
-                element.style.backgroundColor = isMatch ? "brown" : "";
+            //     element.style.backgroundColor = isMatch ? "brown" : "";
 
-                if (isMatch) {
-                  lastFoundElement = element;
-                }
-              });
+            //     if (isMatch) {
+            //       lastFoundElement = element;
+            //     }
+            //   });
 
-              if (lastFoundElement) {
-                lastFoundElement.scrollIntoView({ behavior: "smooth", block: "center" });
-              }
-            }
+            //   if (lastFoundElement) {
+            //     lastFoundElement.scrollIntoView({ behavior: "smooth", block: "center" });
+            //   }
+            // }
 
             document.getElementById("searchInput").addEventListener("keydown", function (event) {
               if (event.key === "Enter") {
@@ -169,31 +175,31 @@
           }
         });
 
-        function deleteMessages(div, numofMessages) {
-          try {
-            // Get all paragraphs into an HTMLCollection
-            const paragraphs = div.getElementsByTagName("p");
-            const numOfParaToDelete = 4;
-            const numOfMSGToDelete = numOfParaToDelete * (numofMessages / 2);
+        // function deleteMessages(div, numofMessages) {
+        //   try {
+        //     // Get all paragraphs into an HTMLCollection
+        //     const paragraphs = div.getElementsByTagName("p");
+        //     const numOfParaToDelete = 4;
+        //     const numOfMSGToDelete = numOfParaToDelete * (numofMessages / 2);
 
-            // Convert HTMLCollection to an array
-            const paragraphArray = Array.from(paragraphs);
-            // console.log(paragraphArray[0]);
+        //     // Convert HTMLCollection to an array
+        //     const paragraphArray = Array.from(paragraphs);
+        //     // console.log(paragraphArray[0]);
 
-            // Get the number of paragraphs
-            const numParagraphs = paragraphArray.length;
-            // console.log(numParagraphs);
+        //     // Get the number of paragraphs
+        //     const numParagraphs = paragraphArray.length;
+        //     // console.log(numParagraphs);
 
-            if (numParagraphs > numofMessages * numOfParaToDelete) {
-              for (let index = 0; index < numOfMSGToDelete; index++) {
-                div.removeChild(paragraphArray[index]);
-              }
-            }
-          } catch (error) {
-            console.log("prob not enough to del");
-            console.log(error);
-          }
-        }
+        //     if (numParagraphs > numofMessages * numOfParaToDelete) {
+        //       for (let index = 0; index < numOfMSGToDelete; index++) {
+        //         div.removeChild(paragraphArray[index]);
+        //       }
+        //     }
+        //   } catch (error) {
+        //     console.log("prob not enough to del");
+        //     console.log(error);
+        //   }
+        // }
 
         let msgCounter = 0;
         window.api.receive("log-message", (ClientPayload) => {
