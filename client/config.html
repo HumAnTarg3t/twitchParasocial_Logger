@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Styled Input Form</title>
+    <link rel="stylesheet" href="config.css" />
+  </head>
+  <body>
+    <div class="container">
+      <form id="inputForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name" autocomplete="off" />
+
+        <div class="button-container">
+          <input type="submit" value="Add" />
+          <button type="button" id="remove">Remove</button>
+        </div>
+      </form>
+      <ul id="submittedList"></ul>
+    </div>
+
+    <script>
+      import { createConfigFileIfNotExists } from "../utils/createConfigFileIfNotExists.js";
+      document.addEventListener("DOMContentLoaded", function () {
+        if (!createConfigFileIfNotExists()) {
+          const form = document.getElementById("inputForm");
+          const nameInput = document.getElementById("name");
+          const submittedList = document.getElementById("submittedList");
+          const removeButton = document.getElementById("remove");
+
+          removeButton.addEventListener("click", function () {
+            const inputValue = nameInput.value.trim();
+            if (inputValue !== "") {
+              nameInput.value = "";
+              removeItemFromList(inputValue);
+            } else if (submittedList.lastElementChild) {
+              submittedList.removeChild(submittedList.lastElementChild);
+            }
+          });
+
+          form.addEventListener("submit", function (e) {
+            e.preventDefault();
+            const inputValue = nameInput.value.trim();
+            if (inputValue !== "") {
+              const listItem = document.createElement("li");
+              listItem.textContent = inputValue;
+              submittedList.appendChild(listItem);
+              nameInput.value = "";
+            }
+          });
+
+          function removeItemFromList(value) {
+            const items = submittedList.getElementsByTagName("li");
+            for (let i = items.length - 1; i >= 0; i--) {
+              if (items[i].textContent === value) {
+                submittedList.removeChild(items[i]);
+                break;
+              }
+            }
+          }
+        } else {
+          window.location = "index.html";
+        }
+      });
+    </script>
+  </body>
+</html>

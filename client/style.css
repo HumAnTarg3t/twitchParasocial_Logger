@@ -1,0 +1,66 @@
+/* style.css */
+/* Style for tabs */
+
+body {
+  background-color: #282828;
+}
+
+.tab {
+  display: none;
+  font-family: Helvetica;
+  color: #ebdbb2;
+}
+
+/* Style to position tabs at the top */
+/* New CSS rules to adjust layout and spacing */
+.headerClass {
+  position: sticky;
+  top: 0;
+  /* background-color: rgb(148, 67, 167); */
+  z-index: 100;
+  display: flex;
+  justify-content: space-between; /* Distribute items horizontally */
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 5px 10px; /* Add padding for better spacing */
+}
+
+.tabLinks {
+  display: flex;
+  gap: 5px; /* Creates space between tab links */
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.searchBar {
+  visibility: hidden;
+}
+
+/* Adjust the position of the search bar */
+.searchBar.visible {
+  visibility: visible;
+  margin-left: auto; /* Pushes the search bar to the right */
+}
+
+.tabLinks button {
+  padding: 8px 16px;
+  cursor: pointer;
+  border: none;
+  background-color: #98971a;
+
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 10px;
+}
+
+.tabLinks button:hover {
+  background-color: #b8bb26;
+}
+.streamerIdCSS {
+  color: rgb(107, 25, 25);
+}
+.dateCSS {
+}
+.msgCSS {
+}
+.normalFrogIdCSS {
+}
