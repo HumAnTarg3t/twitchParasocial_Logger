@@ -11,14 +11,12 @@
     </div>
     <div class="tabs"></div>
 
-    <!-- <script type="module"></script> -->
     <script type="module">
-      // import { scrollToBottom } from "./utils/scrollToBottom.js";
-      // import { handleScroll } from "./utils/handleScroll.js";
       import { deleteMessages } from "./utils/deleteMessages.js";
       import { showTab } from "./utils/showTab.js";
       import { searchInDivElement } from "./utils/searchInDivElement.js";
       window.addEventListener("DOMContentLoaded", async () => {
+        let lastInput;
         const tabLinksContainer = document.querySelector(".tabLinks");
         const tabsContainer = document.querySelector(".tabs");
 
@@ -45,41 +43,6 @@
         } catch (error) {
           console.error("Error fetching or parsing data:", error);
         }
-
-        // Function to show tab based on index
-        // function showTab(index) {
-        //   const tabs = document.querySelectorAll(".tab");
-        //   const tabLinks = document.querySelectorAll(".tabLinks button");
-
-        //   tabs.forEach((tab) => (tab.style.display = "none"));
-        //   tabLinks.forEach((link) => link.classList.remove("active"));
-        //   tabs[index].style.display = "block";
-        //   tabLinks[index].classList.add("active");
-
-        //   const documentHeight = Math.max(
-        //     document.body.scrollHeight,
-        //     document.body.offsetHeight,
-        //     document.documentElement.clientHeight,
-        //     document.documentElement.scrollHeight,
-        //     document.documentElement.offsetHeight
-        //   );
-
-        //   // Get the button with the class "active" inside the div with the class "tabLinks"
-        //   const activeTab = document.querySelector(".tabLinks .active");
-
-        //   // Check if an active button was found
-        //   if (activeTab) {
-        //     // Get the inner text of the active button
-        //     const buttonText = activeTab.innerText;
-        //     document.title = `${buttonText}s chat`;
-        //   } else {
-        //     // console.log('No button with class "active" found.');
-        //   }
-
-        //   window.scrollTo({
-        //     top: documentHeight,
-        //   });
-        // }
 
         let autoScrollflag;
         autoScrollflag = true;
@@ -137,38 +100,20 @@
             const divElement = document.querySelector(`#${activeTab}.tab`);
             const messagesInParagraphs = divElement.querySelectorAll("p").innerHTML;
 
-            // function searchInDivElement() {
-            //   const activeTab = document.querySelector(".tabLinks .active").innerHTML;
-            //   const divElement = document.querySelector(`#${activeTab}.tab`);
-            //   const userInput = document.getElementById("searchInput").value.trim().toLowerCase();
-
-            //   const elementsToSearch = divElement.querySelectorAll("*");
-            //   let lastFoundElement = null;
-
-            //   elementsToSearch.forEach((element) => {
-            //     const textContent = element.textContent.toLowerCase();
-            //     const regex = new RegExp(`(?<![\\w!@#$%^&*()-+=?.,])[${userInput}]+(?![\\w!@#$%^&*()-+=?.,])`, "gi");
-            //     const isMatch = userInput !== "" && regex.test(textContent);
-
-            //     element.style.backgroundColor = isMatch ? "brown" : "";
-
-            //     if (isMatch) {
-            //       lastFoundElement = element;
-            //     }
-            //   });
-
-            //   if (lastFoundElement) {
-            //     lastFoundElement.scrollIntoView({ behavior: "smooth", block: "center" });
-            //   }
-            // }
-
+            let lastinput;
             document.getElementById("searchInput").addEventListener("keydown", function (event) {
               if (event.key === "Enter") {
                 const userInput = document.getElementById("searchInput").value.trim().toLowerCase();
-                if (userInput === "") {
-                  searchInDivElement(); // Run to clear highlighting if previously something was highlighted
+                lastinput = userInput;
+
+                if (userInput.length > 0) {
+                  searchInDivElement(null, "Clear");
+                  searchInDivElement(userInput, "Search");
+                } else if (userInput === "") {
+                  searchInDivElement(null, "Clear");
                 } else {
-                  searchInDivElement(); // Run search with user input
+                  console.log("traff ikke noe");
+                  console.log(userInput);
                 }
               }
             });
