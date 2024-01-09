@@ -1,25 +1,30 @@
-function searchInDivElement() {
+function searchInDivElement(input, commandFromClient) {
   const activeTab = document.querySelector(".tabLinks .active").innerHTML;
   const divElement = document.querySelector(`#${activeTab}.tab`);
-  const userInput = document.getElementById("searchInput").value.trim().toLowerCase();
-
+  // const userInput = document.getElementById("searchInput").value.trim().toLowerCase();
+  const userInput = input;
   const elementsToSearch = divElement.querySelectorAll("*");
-  let lastFoundElement = null;
+  if (commandFromClient == "Search") {
+    elementsToSearch.forEach((element) => {
+      const paragraphPlacement = element;
+      const msgInnerHTML = element.innerHTML.toLocaleLowerCase();
+      let paragraphInnerHTMLArrayFormat = msgInnerHTML.split(" ");
 
-  elementsToSearch.forEach((element) => {
-    const textContent = element.textContent.toLowerCase();
-    const regex = new RegExp(`(?<![\\w!@#$%^&*()-+=?.,])[${userInput}]+(?![\\w!@#$%^&*()-+=?.,])`, "gi");
-    const isMatch = userInput !== "" && regex.test(textContent);
+      if (paragraphPlacement.className == "normalFrogIdCSS" || paragraphPlacement.className == "streamerIdCSS") {
+        paragraphInnerHTMLArrayFormat[0] = paragraphInnerHTMLArrayFormat[0].slice(0, -1);
+      }
 
-    element.style.backgroundColor = isMatch ? "brown" : "";
-
-    if (isMatch) {
-      lastFoundElement = element;
-    }
-  });
-
-  if (lastFoundElement) {
-    lastFoundElement.scrollIntoView({ behavior: "smooth", block: "center" });
+      if (paragraphInnerHTMLArrayFormat.includes(userInput)) {
+        paragraphPlacement.style.backgroundColor = "brown";
+        element.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    });
+  } else if (commandFromClient == "Clear") {
+    elementsToSearch.forEach((element) => {
+      // const paragraphPlacement = element;
+      element.style.backgroundColor = "";
+      // const msgInnerHTML = element.innerHTML.toLocaleLowerCase();
+    });
   }
 }
 
