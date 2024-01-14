@@ -1,16 +1,12 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const { readFileSync } = require("fs");
+const { convertTimestamp } = require("./utils/convertTimestamp");
 const path = require("path");
 const url = require("url");
 const tmi = require("tmi.js");
 
 const dataFromConfig = readFileSync("./config.json");
 const streamerListFromConfig = JSON.parse(dataFromConfig).data;
-
-const convertTimestamp = (timestamp) => {
-  const date = new Date(timestamp);
-  return date.toLocaleString(); // Adjusts to local time
-};
 
 let mainWindow;
 
@@ -27,7 +23,7 @@ function createWindow() {
 
   mainWindow.loadURL(
     url.format({
-      pathname: path.join(__dirname, "index.html"),
+      pathname: path.join(__dirname, "/client/index.html"),
       protocol: "file:",
       slashes: true,
     })
