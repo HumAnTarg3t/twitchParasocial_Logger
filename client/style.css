@@ -13,21 +13,46 @@ body {
 
 /* Style to position tabs at the top */
 /* New CSS rules to adjust layout and spacing */
-.headerClass {
+/* .headerClass {
   position: sticky;
   top: 0;
-  /* background-color: rgb(148, 67, 167); */
   z-index: 100;
   display: flex;
-  justify-content: space-between; /* Distribute items horizontally */
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
-  padding: 5px 10px; /* Add padding for better spacing */
+  padding: 5px 10px;
+} */
+
+.headerClass {
+  /* background-color: #333; */
+  justify-content: flex-start;
+  overflow: hidden;
+  /* display: flex; */
+  position: fixed;
+  top: 5px;
+  width: 100%;
+}
+
+.headerClass a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.headerClass a:hover {
+  background-color: #ddd;
+  color: black;
 }
 
 .tabLinks {
+  margin-right: 2px;
+  margin-left: 2px;
   display: flex;
-  gap: 5px; /* Creates space between tab links */
+  gap: 10px; /* Creates space between tab links */
   flex-direction: row;
   flex-wrap: wrap;
 }
