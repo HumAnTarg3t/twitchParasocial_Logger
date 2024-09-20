@@ -58,12 +58,13 @@ try {
         "botrixoficial",
         "thepositivebot",
       ];
-      // (streamerListFromConfig.includes(tags.username) && !skipableUsernames.includes(tags.username)) ||
-      // (tags.mod == true && !skipableUsernames.includes(tags.username)) ||
-      // (tags.badges.vip == 1 && !skipableUsernames.includes(tags.username)) ||
-      // (tags.badges.partner == 1 && !skipableUsernames.includes(tags.username))
+
       try {
-        if (true) {
+        if (
+        (streamerListFromConfig.includes(tags.username) && !skipableUsernames.includes(tags.username)) ||
+        (tags.mod == true && !skipableUsernames.includes(tags.username)) ||
+        (tags.badges.vip == 1 && !skipableUsernames.includes(tags.username)) ||
+        (tags.badges.partner == 1 && !skipableUsernames.includes(tags.username))) {
           // console.log(streamerListFromConfig.includes(tags.username) && !skipableUsernames.includes(tags.username));
           const logMessage = {
             channel: channel,
