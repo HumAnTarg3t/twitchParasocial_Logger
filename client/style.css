@@ -1,6 +1,33 @@
 /* style.css */
 /* Style for tabs */
 
+
+.headerClass {
+  display: flex;
+  flex-direction: column; /* Stacks the elements vertically */
+  justify-content: flex-start;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;  /* Ensure the header starts at the very left */
+  right: 0; /* Ensure the header extends to the right edge */
+  width: 100%; /* Stretch across the entire width of the page */
+  z-index: 2;
+  height: auto; /* Allow the height to adjust based on content */
+  background-color: #282828;
+  padding: 10px; /* Internal padding for content */
+  padding-bottom: 0px;
+  box-sizing: border-box; /* Make sure padding is included in width calculation */
+}
+
+.tabs {
+  margin-top: 70px; /* Push it down to sit below the header */
+  position: relative;
+  z-index: 1;
+  padding: 10px;
+  background-color: #282828;
+}
+
 body {
   background-color: #282828;
 }
@@ -9,30 +36,11 @@ body {
   display: none;
   font-family: Helvetica;
   color: #ebdbb2;
-  margin-top: 5pc
+  position: relative;
 }
 
-/* Style to position tabs at the top */
-/* New CSS rules to adjust layout and spacing */
-/* .headerClass {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-  padding: 5px 10px;
-} */
-
-.headerClass {
-  /* background-color: #333; */
-  justify-content: flex-start;
-  overflow: hidden;
-  /* display: flex; */
-  position: fixed;
-  top: 5px;
-  width: 100%;
+.wrapper {
+  position: relative;
 }
 
 .headerClass a {
@@ -50,13 +58,35 @@ body {
 }
 
 .tabLinks {
-  margin-right: 2px;
-  margin-left: 2px;
+  /* margin: 0 10px; Ensures even margin on both sides */
   display: flex;
   gap: 10px; /* Creates space between tab links */
   flex-direction: row;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* Allows tabs to wrap to the next line if necessary */
+  /* justify-content: space-between; Distributes tabs evenly across the width */
+  width: 100%; /* Ensure tabLinks takes full width */
 }
+
+.tabLinks button {
+  padding: 8px 16px;
+  cursor: pointer;
+  border: none;
+  background-color: #98971a;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 10px;
+
+  /* Flex properties */
+  flex: 1 1 auto; /* This makes each button flexible */
+  min-width: 100px; /* Sets a minimum width for each button */
+  max-width: 200px; /* Sets a maximum width for each button */
+  text-align: center;
+  box-sizing: border-box; /* Ensures padding is part of the width calculation */
+}
+
+.tabLinks button:hover {
+  background-color: #b8bb26;
+}
+
 
 .searchBar {
   visibility: hidden;
@@ -66,6 +96,51 @@ body {
 .searchBar.visible {
   visibility: visible;
   margin-left: auto; /* Pushes the search bar to the right */
+}
+
+.streamerIdCSS {
+  color: rgb(107, 25, 25);
+}
+.dateCSS {
+}
+.msgCSS {
+}
+.normalFrogIdCSS {
+}
+
+
+/* Style to position tabs at the top */
+/* New CSS rules to adjust layout and spacing */
+/* .headerClass {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 5px 10px;
+} */
+
+/* background-color: #333; */
+/* display: flex; */
+/* .headerClass {
+  justify-content: flex-start;
+  overflow: hidden;
+  position: fixed;
+  top: 5px;
+  width: 100%;
+  z-index: 2;
+} */
+
+
+/* .tabLinks {
+  margin-right: 2px;
+  margin-left: 2px;
+  display: flex;
+  gap: 10px; 
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .tabLinks button {
@@ -80,13 +155,4 @@ body {
 
 .tabLinks button:hover {
   background-color: #b8bb26;
-}
-.streamerIdCSS {
-  color: rgb(107, 25, 25);
-}
-.dateCSS {
-}
-.msgCSS {
-}
-.normalFrogIdCSS {
-}
+} */
